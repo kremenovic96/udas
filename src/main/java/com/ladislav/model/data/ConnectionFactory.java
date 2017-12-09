@@ -1,4 +1,4 @@
-package com.ladislav.model;
+package com.ladislav.model.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

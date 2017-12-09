@@ -1,4 +1,4 @@
-package com.ladislav.model;
+package com.ladislav.model.data;
 
 import com.ladislav.model.member.City;
 import com.ladislav.model.member.Member;

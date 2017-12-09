@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.ladislav.model.SQLAccess;
+import com.ladislav.model.data.SQLAccess;
 
 
 public class LoginController implements Controller {

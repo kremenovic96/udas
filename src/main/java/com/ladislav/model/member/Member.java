@@ -11,6 +11,8 @@ public class Member {
 
   private String name;
   private String surname;
+
+  //TODO use date objects
   private String birthDate;
   private String deathDate;
 
@@ -29,11 +31,11 @@ public class Member {
 
   private InvalidityStatus invalidityStatus;
 
-  //TODO dodati novu tabelu u bazu
+  //TODO add new table to database (Ladislav)
   private int invalidityLevel;
   private int invalidityDegree;
 
   private List<Injury> injuries;
 
-  //TODO override equals(), hashCode() and toString(), provide getters/setters
+  //TODO override equals(), hashCode() and toString(), provide getters/setters when class is finished
 }
