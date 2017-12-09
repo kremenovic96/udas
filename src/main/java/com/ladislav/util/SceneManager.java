@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 
 
 /**
- * Simple class to change scenes between from controllers.
- * Every controller has to hold Stage reference so this class could be used properly.
+ * Simple class to change scenes between from controllers. Every controller has to hold Stage
+ * reference so this class could be used properly.
  */
 
 public class SceneManager {

@@ -14,7 +14,8 @@ public class ConnectionFactory {
   private static final String SQL_PASSWORD = ";password=";
 
   /**
-   * Get a connection to database, user must provide valid credentials - SQL Authentification is used
+   * Get a connection to database, user must provide valid credentials - SQL Authentification is
+   * used
    *
    * @return Connection object
    */

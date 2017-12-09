@@ -29,10 +29,7 @@ public class Profession {
 
     Profession that = (Profession) o;
 
-    if (professionID != that.professionID) {
-      return false;
-    }
-    return profession.equals(that.profession);
+    return professionID == that.professionID && profession.equals(that.profession);
   }
 
   @Override

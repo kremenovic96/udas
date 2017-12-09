@@ -3,7 +3,7 @@ package com.ladislav.model.member;
 public class CityProvince {
 
   private final int cityProvinceID;
-  private final  String cityProvince;
+  private final String cityProvince;
   private final int cityID;
 
 
@@ -22,7 +22,6 @@ public class CityProvince {
   }
 
 
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -34,13 +33,8 @@ public class CityProvince {
 
     CityProvince that = (CityProvince) o;
 
-    if (cityProvinceID != that.cityProvinceID) {
-      return false;
-    }
-    if (cityID != that.cityID) {
-      return false;
-    }
-    return cityProvince.equals(that.cityProvince);
+    return cityProvinceID == that.cityProvinceID && cityID == that.cityID && cityProvince
+        .equals(that.cityProvince);
   }
 
   @Override

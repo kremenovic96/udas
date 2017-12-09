@@ -31,10 +31,7 @@ public class Injury {
 
     Injury injury = (Injury) o;
 
-    if (amputation != injury.amputation) {
-      return false;
-    }
-    return position.equals(injury.position);
+    return amputation == injury.amputation && position.equals(injury.position);
   }
 
   @Override
@@ -42,6 +39,14 @@ public class Injury {
     int result = position.hashCode();
     result = 31 * result + (amputation ? 1 : 0);
     return result;
+  }
+
+  @Override
+  public String toString() {
+    return "Injury{" +
+        "position=" + position +
+        ", amputation=" + amputation +
+        '}';
   }
 }
 

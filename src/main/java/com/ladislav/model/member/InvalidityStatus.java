@@ -29,10 +29,8 @@ public class InvalidityStatus {
 
     InvalidityStatus that = (InvalidityStatus) o;
 
-    if (invalidityStatusID != that.invalidityStatusID) {
-      return false;
-    }
-    return invalidityStatus.equals(that.invalidityStatus);
+    return invalidityStatusID == that.invalidityStatusID && invalidityStatus
+        .equals(that.invalidityStatus);
   }
 
   @Override

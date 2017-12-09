@@ -17,18 +17,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
+/**
+ * Frankensteins monster to access the data from DB.
+ * Could be improved
+ *
+ * @author Ladislav
+ */
 public class SQLAccess implements MemberDAO {
 
   Connection connection;
 
-
   public SQLAccess(String username, String password) throws SQLException {
     connection = ConnectionFactory.getConnection(username, password);
   }
-
 
   public void createMember(Member member) {
 
@@ -56,7 +59,6 @@ public class SQLAccess implements MemberDAO {
 
     List<City> cities = queryCities();
     List<CityProvince> cityProvinces = queryCityProvinces();
-    List<InjuryPosition> injuryPositions = queryInjuryPositions();
     List<EducationLevel> educationLevels = queryEducationLevels();
     List<HousingQuestion> housingQuestions = queryHousingQuestions();
     List<InvalidityStatus> invalidityStatuses = queryInvalidityStatuses();
@@ -168,7 +170,7 @@ public class SQLAccess implements MemberDAO {
           );
     }
 
-   return members;
+    return members;
   }
 
   public List<Profession> queryProfessions() throws SQLException {

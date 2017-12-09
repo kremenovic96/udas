@@ -15,7 +15,13 @@ public class NavigationController implements Controller {
   @FXML
   public void onMembersBtnClicked(ActionEvent actionEvent) throws IOException {
     SceneManager
-        .changeScene(stage, getClass().getResource("/view/member_management.fxml"), 800, 600);
+        .changeScene
+            (
+                stage,
+                getClass().getResource("/view/member_management.fxml"),
+                800,
+                600
+            );
   }
 
   public void onArtSchoolBtnClicked(ActionEvent actionEvent) {

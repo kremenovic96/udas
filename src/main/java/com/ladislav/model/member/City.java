@@ -24,7 +24,6 @@ public class City {
     return postNumber;
   }
 
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -36,13 +35,7 @@ public class City {
 
     City city1 = (City) o;
 
-    if (cityID != city1.cityID) {
-      return false;
-    }
-    if (postNumber != city1.postNumber) {
-      return false;
-    }
-    return city.equals(city1.city);
+    return cityID == city1.cityID && postNumber == city1.postNumber && city.equals(city1.city);
   }
 
   @Override

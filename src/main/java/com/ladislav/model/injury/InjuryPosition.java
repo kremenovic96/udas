@@ -1,6 +1,7 @@
 package com.ladislav.model.injury;
 
 public class InjuryPosition {
+
   private final int injuryPositionID;
   private final String injuryPosition;
 
@@ -28,10 +29,7 @@ public class InjuryPosition {
 
     InjuryPosition that = (InjuryPosition) o;
 
-    if (injuryPositionID != that.injuryPositionID) {
-      return false;
-    }
-    return injuryPosition.equals(that.injuryPosition);
+    return injuryPositionID == that.injuryPositionID && injuryPosition.equals(that.injuryPosition);
   }
 
   @Override

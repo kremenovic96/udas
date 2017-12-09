@@ -14,13 +14,13 @@ public class Member {
   private int peopleInHousehold;
   private String sex;
   private String comments;
-  private  int memberID;
+  private int memberID;
 
   private String name;
   private String surname;
   private final String identityNumber;
 
-  //TODO use date objects
+  //TODO use date objects ?!?!
   private String birthDate;
   private String deathDate;
 
@@ -39,11 +39,11 @@ public class Member {
 
   private InvalidityStatus invalidityStatus;
 
-  //TODO add new table to database (Ladislav)
+  //TODO add new table to database and implement it in here and in Access object ! (Ladislav)
   private int invalidityLevel;
   private int invalidityDegree;
 
-  InjuryCause injuryCause;
+  private InjuryCause injuryCause;
   private List<Injury> injuries;
 
   public Member(int memberID, String name, String surname,
@@ -52,7 +52,6 @@ public class Member {
       String dateOfDeath, EducationLevel educationLevel, Profession profession,
       WorkStatus workStatus, InjuryCause injuryCause, InvalidityStatus invalidityStatus,
       HousingQuestion housingQuestion, String sex, String comments, List<Injury> injuries) {
-
 
     this.memberID = memberID;
     this.name = name;
@@ -76,10 +75,6 @@ public class Member {
     this.sex = sex;
     this.comments = comments;
     this.injuries = injuries;
-
-
-
-
   }
 
   public int getMemberID() {

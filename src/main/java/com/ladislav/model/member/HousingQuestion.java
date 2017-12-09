@@ -1,6 +1,7 @@
 package com.ladislav.model.member;
 
 public class HousingQuestion {
+
   private final int housingQuestionID;
   private final String housingQuestion;
 
@@ -29,10 +30,8 @@ public class HousingQuestion {
 
     HousingQuestion that = (HousingQuestion) o;
 
-    if (housingQuestionID != that.housingQuestionID) {
-      return false;
-    }
-    return housingQuestion.equals(that.housingQuestion);
+    return housingQuestionID == that.housingQuestionID && housingQuestion
+        .equals(that.housingQuestion);
   }
 
   @Override

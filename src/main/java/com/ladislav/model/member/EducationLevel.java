@@ -29,10 +29,7 @@ public class EducationLevel {
 
     EducationLevel that = (EducationLevel) o;
 
-    if (educationLevelID != that.educationLevelID) {
-      return false;
-    }
-    return educationlevel.equals(that.educationlevel);
+    return educationLevelID == that.educationLevelID && educationlevel.equals(that.educationlevel);
   }
 
   @Override

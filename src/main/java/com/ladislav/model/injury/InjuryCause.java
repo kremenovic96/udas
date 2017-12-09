@@ -18,7 +18,6 @@ public class InjuryCause {
     return injuryCause;
   }
 
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -30,10 +29,7 @@ public class InjuryCause {
 
     InjuryCause that = (InjuryCause) o;
 
-    if (injuryCauseID != that.injuryCauseID) {
-      return false;
-    }
-    return injuryCause.equals(that.injuryCause);
+    return injuryCauseID == that.injuryCauseID && injuryCause.equals(that.injuryCause);
   }
 
   @Override

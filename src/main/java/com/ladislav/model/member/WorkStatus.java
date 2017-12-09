@@ -29,10 +29,7 @@ public class WorkStatus {
 
     WorkStatus that = (WorkStatus) o;
 
-    if (workStatusID != that.workStatusID) {
-      return false;
-    }
-    return workStatus.equals(that.workStatus);
+    return workStatusID == that.workStatusID && workStatus.equals(that.workStatus);
   }
 
   @Override
