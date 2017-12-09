@@ -1,5 +1,6 @@
 package com.ladislav.controllers;
 
+import com.ladislav.util.SceneManager;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

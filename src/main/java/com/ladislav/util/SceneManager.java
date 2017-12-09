@@ -1,11 +1,18 @@
-package com.ladislav.controllers;
+package com.ladislav.util;
 
+import com.ladislav.controllers.Controller;
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+
+/**
+ * Simple class to change scenes between from controllers.
+ * Every controller has to hold Stage reference so this class could be used properly.
+ */
 
 public class SceneManager {
 

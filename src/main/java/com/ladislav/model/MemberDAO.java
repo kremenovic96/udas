@@ -1,5 +1,6 @@
 package com.ladislav.model;
 
+import com.ladislav.model.member.Member;
 import java.util.List;
 
 public interface MemberDAO {

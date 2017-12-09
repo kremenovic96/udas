@@ -1,8 +1,8 @@
-package com.ladislav.model;
+package com.ladislav.model.member;
 
 import java.util.List;
 
-// TODO Builder pattern in member class
+// TODO Builder pattern in member class?
 
 public class Member {
 

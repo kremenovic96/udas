@@ -1,5 +1,6 @@
 package com.ladislav.model;
 
+import com.ladislav.model.member.Member;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

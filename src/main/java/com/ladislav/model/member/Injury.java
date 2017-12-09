@@ -1,4 +1,4 @@
-package com.ladislav.model;
+package com.ladislav.model.member;
 
 public class Injury {
 
