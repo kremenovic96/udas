@@ -1,7 +1,7 @@
 # Baza-Podataka-UDAS
 App that connects to and manages database for Organization UDAS
 
-I am using google styleguide for code formatting.
+We are using google styleguide for code formatting.
 
 https://github.com/google/styleguide
 
