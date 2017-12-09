@@ -5,7 +5,6 @@ public class InjuryCause {
   private final int injuryCauseID;
   private final String injuryCause;
 
-
   public InjuryCause(int injuryCauseID, String injuryCause) {
     this.injuryCauseID = injuryCauseID;
     this.injuryCause = injuryCause;
