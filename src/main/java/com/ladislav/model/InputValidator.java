@@ -1,4 +1,4 @@
-package com.ladislav.util;
+package com.ladislav.model;
 
 public class InputValidator {
 
