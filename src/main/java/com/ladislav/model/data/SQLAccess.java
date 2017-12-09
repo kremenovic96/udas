@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 public class SQLAccess implements MemberDAO {
@@ -23,8 +24,9 @@ public class SQLAccess implements MemberDAO {
 
   }
 
-  public void deleteMember(Member member) {
-
+  public boolean deleteMember(Member member) throws SQLException {
+    ResultSet resultSet = executeQuery("DELETE FROM clan where clanID = " + member.getMemberID());
+    return resultSet.next();
   }
 
   public void updateMember(Member member) {
@@ -35,59 +37,64 @@ public class SQLAccess implements MemberDAO {
     return null;
   }
 
-  public List<Member> getAllMembers() {
-    try {
-      Statement statement = connection.createStatement();
-      ResultSet resultSet = statement.executeQuery("SELECT * FROM clan");
+  public List<Member> getAllMembers() throws SQLException {
 
-      while (resultSet.next()) {
-        System.out.println(resultSet.getString(2));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
+    ResultSet resultSet = executeQuery("SELECT * FROM clan");
+
+    while (resultSet.next()) {
+      System.out.println(resultSet.getString(2));
     }
 
-    return null;
+    throw new NotImplementedException();
+
   }
 
-  public List<City> getAllCities() {
-    Statement statement = null;
-    try {
-      statement = connection.createStatement();
-      ResultSet resultSet = statement.executeQuery("SELECT * FROM mjesto");
 
-      List<City> cities = new ArrayList<>();
+  private City getCityFromID(int id) throws SQLException {
+    ResultSet resultSet = executeQuery("SELECT * FROM mjesto WHERE mjestoID = " + id);
 
-      while (resultSet.next()) {
-        cities.add(
-            new City
-                (
-                    resultSet.getInt("mjestoID"),
-                    resultSet.getString("mjesto"),
-                    resultSet.getInt("postanski_broj")
-                )
+    if (!resultSet.next()) {
+      return null;
+    }
+
+    return new City
+        (
+            resultSet.getInt("mjestoID"),
+            resultSet.getString("mjesto"),
+            resultSet.getInt("postanski_broj")
         );
-      }
-
-      return cities;
-
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-    return null;
   }
 
+  public List<City> getAllCities() throws SQLException {
+
+    ResultSet results = executeQuery("SELECT * FROM mjesto");
+
+    List<City> cities = new ArrayList<>();
+    while (results.next()) {
+      cities.add(
+          new City
+              (
+                  results.getInt("mjestoID"),
+                  results.getString("mjesto"),
+                  results.getInt("postanski_broj")
+              )
+      );
+    }
+    return cities;
+  }
+
+
+  private ResultSet executeQuery(String query) throws SQLException {
+    Statement statement = connection.createStatement();
+    return statement.executeQuery(query);
+
+  }
 
   public static void main(String[] args) throws SQLException {
 
-//    SQLAccess access = new SQLAccess("Lado", "lado");
-//
-//    access.getAllMembers();
+    SQLAccess access = new SQLAccess("Lado", "lado");
+    access.getAllCities().forEach(System.out::println);
 
-    String a = "name-name-name";
-    System.out.println(a.matches("[a-zA-Z-]+"));
   }
 
 }

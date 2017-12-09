@@ -37,5 +37,9 @@ public class Member {
 
   private List<Injury> injuries;
 
+  public int getMemberID() {
+    return memberID;
+  }
+
   //TODO override equals(), hashCode() and toString(), provide getters/setters when class is finished
 }
