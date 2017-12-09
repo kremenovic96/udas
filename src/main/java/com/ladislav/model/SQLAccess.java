@@ -1,12 +1,13 @@
 package com.ladislav.model;
 
+import com.ladislav.model.member.City;
 import com.ladislav.model.member.Member;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
-
-import java.sql.Connection;
 
 
 public class SQLAccess implements MemberDAO {
@@ -49,6 +50,35 @@ public class SQLAccess implements MemberDAO {
     return null;
   }
 
+  public List<City> getAllCities() {
+    Statement statement = null;
+    try {
+      statement = connection.createStatement();
+      ResultSet resultSet = statement.executeQuery("SELECT * FROM mjesto");
+
+      List<City> cities = new ArrayList<>();
+
+      while (resultSet.next()) {
+        cities.add(
+            new City
+                (
+                    resultSet.getInt("mjestoID"),
+                    resultSet.getString("mjesto"),
+                    resultSet.getInt("postanski_broj")
+                )
+        );
+      }
+
+      return cities;
+
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
 
   public static void main(String[] args) throws SQLException {
 
@@ -60,7 +90,5 @@ public class SQLAccess implements MemberDAO {
     System.out.println(a.matches("[a-zA-Z-]+"));
   }
 
-
-
-  }
+}
 
