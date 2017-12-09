@@ -1,0 +1,40 @@
+package com.ladislav.controllers;
+
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+
+public class NavigationController implements Controller {
+
+  @FXML
+  Stage stage;
+
+  @FXML
+  public void onMembersBtnClicked(ActionEvent actionEvent) throws IOException {
+    SceneManager
+        .changeScene(stage, getClass().getResource("/view/member_management.fxml"), 800, 600);
+  }
+
+  public void onArtSchoolBtnClicked(ActionEvent actionEvent) {
+    showFeatureUnavailableDialog();
+  }
+
+  public void onLogoutBtnClicked(ActionEvent actionEvent) throws IOException {
+    SceneManager.changeScene(stage, getClass().getResource("/view/login.fxml"));
+  }
+
+  public void showFeatureUnavailableDialog() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Škola crtanja");
+    alert.setHeaderText("Radovi u toku");
+    alert.setContentText("Baza za školu crtanja i slikanja još nije implementirana");
+    alert.showAndWait();
+  }
+
+  public void setStage(Stage stage) {
+    this.stage = stage;
+  }
+
+}
