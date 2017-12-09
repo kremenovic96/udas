@@ -2,18 +2,14 @@ package com.ladislav.model.injury;
 
 public class Injury {
 
-  private InjuryCause cause;
+
   private InjuryPosition position;
   private boolean amputation;
 
-  public Injury(InjuryCause cause, InjuryPosition position, boolean amputation) {
-    this.cause = cause;
+  public Injury(InjuryPosition position, boolean amputation) {
+
     this.position = position;
     this.amputation = amputation;
-  }
-
-  public InjuryCause getCause() {
-    return cause;
   }
 
   public InjuryPosition getPosition() {
@@ -38,16 +34,12 @@ public class Injury {
     if (amputation != injury.amputation) {
       return false;
     }
-    if (!cause.equals(injury.cause)) {
-      return false;
-    }
     return position.equals(injury.position);
   }
 
   @Override
   public int hashCode() {
-    int result = cause.hashCode();
-    result = 31 * result + position.hashCode();
+    int result = position.hashCode();
     result = 31 * result + (amputation ? 1 : 0);
     return result;
   }

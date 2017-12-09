@@ -41,4 +41,12 @@ public class WorkStatus {
     result = 31 * result + workStatus.hashCode();
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "WorkStatus{" +
+        "workStatusID=" + workStatusID +
+        ", workStatus='" + workStatus + '\'' +
+        '}';
+  }
 }

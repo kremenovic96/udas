@@ -50,4 +50,13 @@ public class CityProvince {
     result = 31 * result + cityID;
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "CityProvince{" +
+        "cityProvinceID=" + cityProvinceID +
+        ", cityProvince='" + cityProvince + '\'' +
+        ", cityID=" + cityID +
+        '}';
+  }
 }
