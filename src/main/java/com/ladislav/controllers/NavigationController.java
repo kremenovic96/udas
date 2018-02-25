@@ -1,5 +1,6 @@
 package com.ladislav.controllers;
 
+import com.ladislav.model.data.SQLAccess;
 import com.ladislav.util.SceneManager;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -12,11 +13,15 @@ public class NavigationController implements Controller {
   @FXML
   Stage stage;
 
+  SQLAccess dataAccess;
+
+
   @FXML
   public void onMembersBtnClicked(ActionEvent actionEvent) throws IOException {
     SceneManager
         .changeScene
             (
+                dataAccess,
                 stage,
                 getClass().getResource("/view/member_management.fxml"),
                 800,
@@ -42,6 +47,11 @@ public class NavigationController implements Controller {
 
   public void setStage(Stage stage) {
     this.stage = stage;
+  }
+
+  @Override
+  public void setDao(SQLAccess dao) {
+    dataAccess = dao;
   }
 
 }

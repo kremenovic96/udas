@@ -1,6 +1,7 @@
 package com.ladislav.util;
 
 import com.ladislav.controllers.Controller;
+import com.ladislav.model.data.SQLAccess;
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 
 
 /**
- * Simple class to change scenes between from controllers. Every controller has to hold Stage
+ * Simple util class to change between scenes from controllers. Every controller has to hold Stage
  * reference so this class could be used properly.
  */
 
@@ -28,6 +29,17 @@ public class SceneManager {
     FXMLLoader loader = new FXMLLoader(resource);
     Parent root = loader.load();
     Controller controller = loader.getController();
+    controller.setStage(stage);
+    stage.setScene(new Scene(root, width, height));
+  }
+
+  //TODO implement it the way controller is passed to loader, so initialize can be used better
+  public static void changeScene(SQLAccess dao, Stage stage, URL resource, int width, int height)
+      throws IOException {
+    FXMLLoader loader = new FXMLLoader(resource);
+    Parent root = loader.load();
+    Controller controller = loader.getController();
+    controller.setDao(dao);
     controller.setStage(stage);
     stage.setScene(new Scene(root, width, height));
   }

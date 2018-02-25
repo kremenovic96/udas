@@ -1,16 +1,7 @@
 package com.ladislav.model.data;
 
-import com.ladislav.model.injury.Injury;
-import com.ladislav.model.injury.InjuryCause;
-import com.ladislav.model.injury.InjuryPosition;
-import com.ladislav.model.member.City;
-import com.ladislav.model.member.CityProvince;
-import com.ladislav.model.member.EducationLevel;
-import com.ladislav.model.member.HousingQuestion;
-import com.ladislav.model.member.InvalidityStatus;
+import com.ladislav.model.member.Injury;
 import com.ladislav.model.member.Member;
-import com.ladislav.model.member.Profession;
-import com.ladislav.model.member.WorkStatus;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,8 +11,7 @@ import java.util.List;
 
 
 /**
- * Frankensteins monster to access the data from DB.
- * Could be improved
+ * Frankensteins monster to access the data from DB. Should be improved
  *
  * @author Ladislav
  */
@@ -53,311 +43,58 @@ public class SQLAccess implements MemberDAO {
 
   public List<Member> getAllMembers() throws SQLException {
 
-    ResultSet resultSet = executeQuery("SELECT * FROM clan");
+    String query = " SELECT clanID, ime, prezime, JMBG, datumRodj, tel1, tel2, mjesto.mjesto,\n"
+        + "        mjesnaZajednica.mjesnaZajednica, ulica, brojStanaKuce, clanoviDomacinstva, datumSmrti,\n"
+        + "        stepenObrazovanja.stepenObr, zanimanje.zanimanje, radniStatus.radniStat, nacinPovrede.nacinPovr,\n"
+        + "        statusInvalidnosti.statusInv, stambenoPitanje.stambenoPit, pol, napomena\n"
+        + "    FROM clan\n"
+        + "    LEFT JOIN mjesto ON mjesto.mjestoID = clan.clanID\n"
+        + "    LEFT JOIN mjesnaZajednica ON mjesnaZajednica.mjesnaZajID = clan.mjesnaZajID\n"
+        + "    LEFT JOIN stepenObrazovanja ON stepenObrazovanja.stepenObrID = clan.stepenObrID\n"
+        + "    LEFT JOIN zanimanje ON zanimanje.zanimanjeID = clan.zanimanjeID\n"
+        + "    LEFT JOIN radniStatus ON radniStatus.radniStatID = clan.radniStatID\n"
+        + "    LEFT JOIN nacinPovrede ON nacinPovrede.nacinPovrID = clan.nacinPovrID\n"
+        + "    LEFT JOIN statusInvalidnosti ON statusInvalidnosti.statusInvID = clan.statusInvID\n"
+        + "    LEFT JOIN stambenoPitanje ON stambenoPitanje.stambenoPitID = clan.stamPitID";
+
+    ResultSet resultSet = executeQuery(query);
 
     List<Member> members = new ArrayList<>();
 
-    List<City> cities = queryCities();
-    List<CityProvince> cityProvinces = queryCityProvinces();
-    List<EducationLevel> educationLevels = queryEducationLevels();
-    List<HousingQuestion> housingQuestions = queryHousingQuestions();
-    List<InvalidityStatus> invalidityStatuses = queryInvalidityStatuses();
-    List<Profession> professions = queryProfessions();
-    List<WorkStatus> workStatuses = queryWorkStatuses();
-    List<InjuryCause> injuryCauses = queryInjuryCauses();
-
     while (resultSet.next()) {
 
-      int memberID = resultSet.getInt("clanID");
-      String name = resultSet.getString("ime");
-      String surname = resultSet.getString("prezime");
-      String identityNumber = resultSet.getString("JMBG");
-      String dateOfBirth = resultSet.getString("datumRodj");
-      String phoneNumber1 = resultSet.getString("tel1");
-      String phoneNumber2 = resultSet.getString("tel2");
-      int cityID = resultSet.getInt("mjestoID");
-      int cityProvinceID = resultSet.getInt("mjesnaZajID");
-      String street = resultSet.getString("ulica");
-      String homeNumber = resultSet.getString("brojStanaKuce");
-      int peopleInHousehold = resultSet.getInt("clanoviDomacinstva");
-      String dateOfDeath = resultSet.getString("datumSmrti");
-      int educationLevelID = resultSet.getInt("stepenObrID");
-      int professionID = resultSet.getInt("zanimanjeID");
-      int workStatusID = resultSet.getInt("radniStatID");
-      int injuryCauseID = resultSet.getInt("nacinPovrID");
-      int invalidityStatusID = resultSet.getInt("statusInvID");
-      int housingQuestionID = resultSet.getInt("stamPitID");
-      String sex = resultSet.getString("pol");
-      String comments = resultSet.getString("napomena");
+      int clanID = resultSet.getInt("clanID");
+      String ime = resultSet.getString("ime");
+      String prezime = resultSet.getString("prezime");
+      String JMBG = resultSet.getString("JMBG");
+      String datumRodj = resultSet.getString("JMBG");
+      String tel = resultSet.getString("tel1");
+      String tel2 = resultSet.getString("tel2");
+      String mjesto = resultSet.getString("mjesto");
+      String mjesnaZajednica = resultSet.getString("mjesnaZajednica");
+      String ulica = resultSet.getString("ulica");
+      String brojStanaKuce = resultSet.getString("brojStanaKuce");
+      int clanoviDom = resultSet.getInt("clanoviDomacinstva");
+      String datumSmrti = resultSet.getString("datumSmrti");
+      String stepenObr = resultSet.getString("stepenObr");
+      String zanimanje = resultSet.getString("zanimanje");
+      String radniStat = resultSet.getString("radniStat");
+      String nacinPovr = resultSet.getString("nacinPovr");
+      String statusInv = resultSet.getString("statusInv");
+      String stambenoPit = resultSet.getString("stambenoPit");
+      String pol = resultSet.getString("pol");
+      String napomena = resultSet.getString("napomena");
 
-      List<Injury> injuries = queryMembersInjuries(memberID);
+      List<Injury> povrede = getInjuries(clanID);
 
-      City city = cities
-          .stream()
-          .filter(e -> e.getCityID() == cityID)
-          .findFirst()
-          .orElseThrow(null);
-
-      CityProvince cityProvince = cityProvinces
-          .stream()
-          .filter(e -> e.getCityProvinceID() == cityProvinceID)
-          .findFirst()
-          .orElse(null);
-
-      EducationLevel educationLevel = educationLevels
-          .stream()
-          .filter(e -> e.getEducationLevelID() == educationLevelID)
-          .findFirst()
-          .orElseThrow(null);
-
-      HousingQuestion housingQuestion = housingQuestions
-          .stream()
-          .filter(e -> e.getHousingQuestionID() == housingQuestionID)
-          .findFirst()
-          .orElseThrow(null);
-
-      Profession profession = professions
-          .stream()
-          .filter(e -> e.getProfessionID() == professionID)
-          .findFirst()
-          .orElseThrow(null);
-
-      WorkStatus workStatus = workStatuses
-          .stream()
-          .filter(e -> e.getWorkStatusID() == workStatusID)
-          .findFirst()
-          .orElseThrow(null);
-
-      InvalidityStatus invalidityStatus = invalidityStatuses
-          .stream()
-          .filter(e -> e.getInvalidityStatusID() == invalidityStatusID)
-          .findFirst()
-          .orElseThrow(null);
-
-      InjuryCause injuryCause = injuryCauses
-          .stream()
-          .filter(e -> e.getInjuryCauseID() == injuryCauseID)
-          .findFirst()
-          .orElseThrow(null);
-
-      members.add
-          (
-              new Member
-                  (
-                      memberID,
-                      name,
-                      surname,
-                      identityNumber,
-                      dateOfBirth,
-                      phoneNumber1,
-                      phoneNumber2,
-                      city,
-                      cityProvince,
-                      street,
-                      homeNumber,
-                      peopleInHousehold,
-                      dateOfDeath,
-                      educationLevel,
-                      profession,
-                      workStatus,
-                      injuryCause,
-                      invalidityStatus,
-                      housingQuestion,
-                      sex,
-                      comments,
-                      injuries
-                  )
-          );
+          members.add(
+              new Member(clanID, ime, prezime, JMBG, datumRodj, tel, tel2, mjesto, mjesnaZajednica,
+                  ulica, brojStanaKuce, clanoviDom, datumSmrti, stepenObr, zanimanje, radniStat,
+                  nacinPovr,
+                  statusInv, stambenoPit, pol, napomena, povrede));
     }
 
     return members;
-  }
-
-  public List<Profession> queryProfessions() throws SQLException {
-
-    ResultSet results = executeQuery("SELECT * FROM zanimanje");
-
-    List<Profession> professions = new ArrayList<>();
-    while (results.next()) {
-      professions.add(
-          new Profession
-              (
-                  results.getInt("zanimanjeID"),
-                  results.getString("zanimanje")
-              )
-      );
-    }
-    return professions;
-  }
-
-
-  public List<Injury> queryMembersInjuries(int clanID) throws SQLException {
-
-    ResultSet results = executeQuery("SELECT * FROM povreda WHERE clanID =" + clanID);
-
-    List<InjuryPosition> injuryPositions = queryInjuryPositions();
-    List<Injury> injuries = new ArrayList<>();
-
-    while (results.next()) {
-
-      int injuryPositionID = results.getInt("mjestoPovrID");
-      boolean amputated = results.getBoolean("amputacija");
-
-      InjuryPosition injuryPosition = injuryPositions
-          .stream()
-          .filter(e -> e.getInjuryPositionID() == injuryPositionID)
-          .findFirst()
-          .orElse(null);
-
-      injuries.add
-          (
-              new Injury
-                  (
-                      injuryPosition,
-                      amputated
-                  )
-          );
-    }
-
-    return injuries;
-  }
-
-  public List<City> queryCities() throws SQLException {
-
-    ResultSet results = executeQuery("SELECT * FROM mjesto");
-
-    List<City> cities = new ArrayList<>();
-    while (results.next()) {
-      cities.add(
-          new City
-              (
-                  results.getInt("mjestoID"),
-                  results.getString("mjesto"),
-                  results.getInt("postanski_broj")
-              )
-      );
-    }
-    return cities;
-  }
-
-  public List<EducationLevel> queryEducationLevels() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM stepenObrazovanja");
-    List<EducationLevel> educationLevels = new ArrayList<>();
-
-    while (results.next()) {
-      educationLevels.add
-          (
-              new EducationLevel
-                  (
-                      results.getInt("stepenObrID"),
-                      results.getString("stepenObr")
-                  )
-          );
-    }
-    return educationLevels;
-  }
-
-  public List<InvalidityStatus> queryInvalidityStatuses() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM statusInvalidnosti");
-    List<InvalidityStatus> InvalidityStatus = new ArrayList<>();
-
-    while (results.next()) {
-      InvalidityStatus.add
-          (
-              new InvalidityStatus
-                  (
-                      results.getInt("statusInvID"),
-                      results.getString("statusInv")
-                  )
-          );
-    }
-    return InvalidityStatus;
-  }
-
-  public List<HousingQuestion> queryHousingQuestions() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM stambenoPitanje");
-    List<HousingQuestion> housingQuestions = new ArrayList<>();
-
-    while (results.next()) {
-      housingQuestions.add
-          (
-              new HousingQuestion
-                  (
-                      results.getInt("stambenoPitID"),
-                      results.getString("stambenoPit")
-                  )
-          );
-    }
-    return housingQuestions;
-  }
-
-  public List<CityProvince> queryCityProvinces() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM mjesnaZajednica");
-    List<CityProvince> cityProvinces = new ArrayList<>();
-
-    while (results.next()) {
-      cityProvinces.add
-          (
-              new CityProvince
-                  (
-                      results.getInt("mjesnaZajID"),
-                      results.getString("mjesnaZajednica"),
-                      results.getInt("mjestoID")
-                  )
-          );
-    }
-    return cityProvinces;
-  }
-
-  public List<InjuryCause> queryInjuryCauses() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM nacinPovrede");
-    List<InjuryCause> injuryCauses = new ArrayList<>();
-
-    while (results.next()) {
-      injuryCauses.add
-          (
-              new InjuryCause
-                  (
-                      results.getInt("nacinPovrID"),
-                      results.getString("nacinPovr")
-                  )
-          );
-    }
-    return injuryCauses;
-  }
-
-  public List<WorkStatus> queryWorkStatuses() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM radniStatus");
-    List<WorkStatus> workStatuses = new ArrayList<>();
-
-    while (results.next()) {
-      workStatuses.add
-          (
-              new WorkStatus
-                  (
-                      results.getInt("radniStatID"),
-                      results.getString("radniStat")
-                  )
-          );
-    }
-    return workStatuses;
-  }
-
-  public List<InjuryPosition> queryInjuryPositions() throws SQLException {
-    ResultSet results = executeQuery("SELECT * FROM mjestoPovrede");
-    List<InjuryPosition> injuryPositions = new ArrayList<>();
-
-    while (results.next()) {
-      injuryPositions.add
-          (
-              new InjuryPosition
-                  (
-                      results.getInt("mjestoPovrID"),
-                      results.getString("mjestoPovr")
-                  )
-          );
-    }
-    return injuryPositions;
   }
 
   private ResultSet executeQuery(String query) throws SQLException {
@@ -366,21 +103,27 @@ public class SQLAccess implements MemberDAO {
 
   }
 
-  private City queryCityFromID(int id) throws SQLException {
-    ResultSet resultSet = executeQuery("SELECT * FROM mjesto WHERE mjestoID = " + id);
+  private List<Injury> getInjuries(int id) throws SQLException {
 
-    if (!resultSet.next()) {
-      return null;
+    List<Injury> injuries = new ArrayList<>();
+
+    ResultSet resultSet = executeQuery("\n"
+        + "SELECT mjestoPovrede.mjestoPovr, amputacija\n"
+        + "FROM povreda\n"
+        + "LEFT JOIN mjestoPovrede ON mjestoPovrede.mjestoPovrID = povreda.mjestoPovrID\n"
+        + "WHERE clanID =" + id);
+
+    while (resultSet.next()) {
+
+      String povreda = resultSet.getString("mjestoPovr");
+      boolean amputacija = resultSet.getBoolean("amputacija");
+
+      injuries.add(new Injury(povreda, amputacija));
+
     }
 
-    return new City
-        (
-            resultSet.getInt("mjestoID"),
-            resultSet.getString("mjesto"),
-            resultSet.getInt("postanski_broj")
-        );
+    return injuries;
   }
-
 
   public static void main(String[] args) throws SQLException {
 

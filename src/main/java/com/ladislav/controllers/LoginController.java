@@ -3,6 +3,7 @@ package com.ladislav.controllers;
 import com.ladislav.model.data.SQLAccess;
 import com.ladislav.util.SceneManager;
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,18 +29,29 @@ public class LoginController implements Controller {
     this.stage = previousStage;
   }
 
+  @Override
+  public void setDao(SQLAccess dao) {
+    sqlAccess = dao;
+  }
+
   @FXML
   public void onLoginBtnClicked() {
 
     String username = userNameText.getText();
     String password = passwordField.getText();
 
-    // TODO connect to DB and get SQL access object here?
+    try {
+      sqlAccess = new SQLAccess(username, password);
+    } catch (SQLException e) {
+      // TODO print error dialog
+      e.printStackTrace();
+    }
 
     try {
-      SceneManager.changeScene(stage, getClass().getResource("/view/navigation.fxml"));
+      SceneManager.changeScene(sqlAccess, stage, getClass().getResource("/view/navigation.fxml"), 300, 275);
     } catch (IOException e) {
       e.printStackTrace();
+
     }
   }
 }
