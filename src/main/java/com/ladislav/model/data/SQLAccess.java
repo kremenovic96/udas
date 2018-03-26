@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -41,6 +42,11 @@ public class SQLAccess implements MemberDAO {
     return null;
   }
 
+
+  public List<Member> getMembers(HashMap<String, String> searchParameters) {
+    return null;
+  }
+
   public List<Member> getAllMembers() throws SQLException {
 
     String query = " SELECT clanID, ime, prezime, JMBG, datumRodj, tel1, tel2, mjesto.mjesto,\n"
@@ -58,9 +64,7 @@ public class SQLAccess implements MemberDAO {
         + "    LEFT JOIN stambenoPitanje ON stambenoPitanje.stambenoPitID = clan.stamPitID";
 
     ResultSet resultSet = executeQuery(query);
-
     List<Member> members = new ArrayList<>();
-
     while (resultSet.next()) {
 
       int clanID = resultSet.getInt("clanID");
@@ -127,8 +131,8 @@ public class SQLAccess implements MemberDAO {
 
   public static void main(String[] args) throws SQLException {
 
-    SQLAccess access = new SQLAccess("Lado", "lado");
-    access.getAllMembers().forEach(System.out::println);
+//    SQLAccess access = new SQLAccess("Lado", "lado");
+//    access.getAllMembers().forEach(System.out::println);
 
   }
 

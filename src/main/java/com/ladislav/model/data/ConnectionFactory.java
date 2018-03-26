@@ -37,8 +37,9 @@ public class ConnectionFactory {
    * Test Connection
    */
   public static void main(String[] args) throws SQLException {
-    Connection connection = ConnectionFactory.getConnection();
-    Connection connection2 = ConnectionFactory.getConnection("Lado", "lado");
+//    Connection connection = ConnectionFactory.getConnection();
+//    Connection connection2 = ConnectionFactory.getConnection("Lado", "lado");
   }
 }
+
 

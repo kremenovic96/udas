@@ -282,4 +282,5 @@ public class Member {
   }
 
   //TODO override equals(), hashCode() and toString(), provide getters/setters when class is finished
+
 }

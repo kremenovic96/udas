@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
  * Simple util class to change between scenes from controllers. Every controller has to hold Stage
  * reference so this class could be used properly.
@@ -42,5 +41,9 @@ public class SceneManager {
     controller.setDao(dao);
     controller.setStage(stage);
     stage.setScene(new Scene(root, width, height));
+
+
   }
+
 }
+
