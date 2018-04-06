@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * Frankensteins monster to access the data from DB. Should be improved
  *
@@ -71,7 +70,7 @@ public class SQLAccess implements MemberDAO {
       String ime = resultSet.getString("ime");
       String prezime = resultSet.getString("prezime");
       String JMBG = resultSet.getString("JMBG");
-      String datumRodj = resultSet.getString("JMBG");
+      String datumRodj = resultSet.getString("datumRodj");
       String tel = resultSet.getString("tel1");
       String tel2 = resultSet.getString("tel2");
       String mjesto = resultSet.getString("mjesto");
