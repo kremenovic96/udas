@@ -6,12 +6,9 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-  public static final String URL = "jdbc:sqlserver://localhost";
-  private static final String USER = "Lado";
-  private static final String PASS = "lado";
-  private static final String SQL_SERVER = "jdbc:sqlserver://localhost;databaseName=udas;";
-  private static final String SQL_USER = "user=";
-  private static final String SQL_PASSWORD = ";password=";
+  private static final String SQL_SERVER = "jdbc:mysql://localhost/udas?" +
+      "user=root&password=qwerty&useSSL=false";
+
 
   /**
    * Get a connection to database, user must provide valid credentials - SQL Authentification is
@@ -19,26 +16,25 @@ public class ConnectionFactory {
    *
    * @return Connection object
    */
-  public static Connection getConnection(String username, String password) throws SQLException {
+  public static Connection getConnection() throws SQLException {
 
-    String connectionUrl = SQL_SERVER + SQL_USER + username + SQL_PASSWORD + password + ";";
-    return DriverManager.getConnection(connectionUrl);
-
+//    String connectionUrl = SQL_SERVER + SQL_USER + username + SQL_PASSWORD + password + ";";
+    return DriverManager.getConnection(SQL_SERVER);
   }
 
   /**
    * Temporary method used for testing purposes
    */
-  public static Connection getConnection() throws SQLException {
-    return getConnection(USER, PASS);
-  }
+//  public static Connection getConnection() throws SQLException {
+//    return getConnection(USER, PASS);
+//  }
 
   /**
    * Test Connection
    */
   public static void main(String[] args) throws SQLException {
-//    Connection connection = ConnectionFactory.getConnection();
-//    Connection connection2 = ConnectionFactory.getConnection("Lado", "lado");
+    Connection connection = ConnectionFactory.getConnection();
+
   }
 }
 

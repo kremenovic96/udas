@@ -35,6 +35,13 @@
       <artifactId>mssql-jdbc</artifactId>
       <version>6.2.1.jre8</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.11</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
     <dependency>
       <groupId>org.controlsfx</groupId>

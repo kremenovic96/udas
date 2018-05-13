@@ -20,7 +20,7 @@ public class SQLAccess implements MemberDAO {
   Connection connection;
 
   public SQLAccess(String username, String password) throws SQLException {
-    connection = ConnectionFactory.getConnection(username, password);
+    connection = ConnectionFactory.getConnection();
   }
 
   public void createMember(Member member) {
@@ -28,7 +28,7 @@ public class SQLAccess implements MemberDAO {
   }
 
   public boolean deleteMember(Member member) throws SQLException {
-    ResultSet resultSet = executeQuery("DELETE FROM clan where clanID = " + member.getMemberID());
+    ResultSet resultSet = executeQuery("DELETE FROM clan where id_clan = " + member.getMemberID());
     return resultSet.next();
   }
 
@@ -48,53 +48,53 @@ public class SQLAccess implements MemberDAO {
 
   public List<Member> getAllMembers() throws SQLException {
 
-    String query = " SELECT clanID, ime, prezime, JMBG, datumRodj, tel1, tel2, mjesto.mjesto,\n"
-        + "        mjesnaZajednica.mjesnaZajednica, ulica, brojStanaKuce, clanoviDomacinstva, datumSmrti,\n"
-        + "        stepenObrazovanja.stepenObr, zanimanje.zanimanje, radniStatus.radniStat, nacinPovrede.nacinPovr,\n"
-        + "        statusInvalidnosti.statusInv, stambenoPitanje.stambenoPit, pol, napomena\n"
+    String query = " SELECT id_clan, ime, prezime, JMBG, datum_rodj, tel1, tel2, mjesto.mjesto,\n"
+        + "        mjesna_zajednica.mjesna_zajednica, ulica, broj_stana_kuce, broj_clanova, datum_smrti,\n"
+        + "        stepen_obrazovanja.stepen_obr, zanimanje.zanimanje, radni_status.radni_status, nacin_povrede.nacin_povrede,\n"
+        + "        status_invalidnosti.status_invalidnosti, stambeno_pitanje.stambeno_pitanje, pol, napomena\n"
         + "    FROM clan\n"
-        + "    LEFT JOIN mjesto ON mjesto.mjestoID = clan.clanID\n"
-        + "    LEFT JOIN mjesnaZajednica ON mjesnaZajednica.mjesnaZajID = clan.mjesnaZajID\n"
-        + "    LEFT JOIN stepenObrazovanja ON stepenObrazovanja.stepenObrID = clan.stepenObrID\n"
-        + "    LEFT JOIN zanimanje ON zanimanje.zanimanjeID = clan.zanimanjeID\n"
-        + "    LEFT JOIN radniStatus ON radniStatus.radniStatID = clan.radniStatID\n"
-        + "    LEFT JOIN nacinPovrede ON nacinPovrede.nacinPovrID = clan.nacinPovrID\n"
-        + "    LEFT JOIN statusInvalidnosti ON statusInvalidnosti.statusInvID = clan.statusInvID\n"
-        + "    LEFT JOIN stambenoPitanje ON stambenoPitanje.stambenoPitID = clan.stamPitID";
+        + "    LEFT JOIN mjesto ON mjesto.id_mjesto = clan.id_clan\n"
+        + "    LEFT JOIN mjesna_zajednica ON mjesna_zajednica.id_mjesna_zajednica = clan.id_mjesna\n"
+        + "    LEFT JOIN stepen_obrazovanja ON stepen_obrazovanja.id_stepen_obrazovanja = clan.id_stepen_obr\n"
+        + "    LEFT JOIN zanimanje ON zanimanje.id_zanimanje = clan.id_zanimanje\n"
+        + "    LEFT JOIN radni_status ON radni_status.id_radni_status = clan.id_radni_status\n"
+        + "    LEFT JOIN nacin_povrede ON nacin_povrede.nacin_povrede = clan.id_nacin_povrd\n"
+        + "    LEFT JOIN status_invalidnosti ON status_invalidnosti.id_status_invalidnosti = clan.id_status_invalidnosti\n"
+        + "    LEFT JOIN stambeno_pitanje ON stambeno_pitanje.id_stambeno_pitanje = clan.id_stambeno_pitanje;";
 
     ResultSet resultSet = executeQuery(query);
     List<Member> members = new ArrayList<>();
     while (resultSet.next()) {
 
-      int clanID = resultSet.getInt("clanID");
+      int clanID = resultSet.getInt("id_clan");
       String ime = resultSet.getString("ime");
       String prezime = resultSet.getString("prezime");
       String JMBG = resultSet.getString("JMBG");
-      String datumRodj = resultSet.getString("datumRodj");
+      String datum_rodj = resultSet.getString("datum_rodj");
       String tel = resultSet.getString("tel1");
       String tel2 = resultSet.getString("tel2");
       String mjesto = resultSet.getString("mjesto");
-      String mjesnaZajednica = resultSet.getString("mjesnaZajednica");
+      String mjesna_zajednica = resultSet.getString("mjesna_zajednica");
       String ulica = resultSet.getString("ulica");
-      String brojStanaKuce = resultSet.getString("brojStanaKuce");
-      int clanoviDom = resultSet.getInt("clanoviDomacinstva");
-      String datumSmrti = resultSet.getString("datumSmrti");
-      String stepenObr = resultSet.getString("stepenObr");
+      String broj_stana_kuce = resultSet.getString("broj_stana_kuce");
+      int clanoviDom = resultSet.getInt("broj_clanova");
+      String datum_smrti = resultSet.getString("datum_smrti");
+      String stepen_obr = resultSet.getString("stepen_obr");
       String zanimanje = resultSet.getString("zanimanje");
-      String radniStat = resultSet.getString("radniStat");
-      String nacinPovr = resultSet.getString("nacinPovr");
-      String statusInv = resultSet.getString("statusInv");
-      String stambenoPit = resultSet.getString("stambenoPit");
+      String radni_status = resultSet.getString("radni_status");
+      String nacin_povr = resultSet.getString("nacin_povr");
+      String status_inv = resultSet.getString("status_invalidnosti");
+      String stambeno_pitanje = resultSet.getString("stambeno_pitanje");
       String pol = resultSet.getString("pol");
       String napomena = resultSet.getString("napomena");
 
       List<Injury> povrede = getInjuries(clanID);
 
           members.add(
-              new Member(clanID, ime, prezime, JMBG, datumRodj, tel, tel2, mjesto, mjesnaZajednica,
-                  ulica, brojStanaKuce, clanoviDom, datumSmrti, stepenObr, zanimanje, radniStat,
-                  nacinPovr,
-                  statusInv, stambenoPit, pol, napomena, povrede));
+              new Member(clanID, ime, prezime, JMBG, datum_rodj, tel, tel2, mjesto, mjesna_zajednica,
+                  ulica, broj_stana_kuce, clanoviDom, datum_smrti, stepen_obr, zanimanje, radni_status,
+                  nacin_povr,
+                  status_inv, stambeno_pitanje, pol, napomena, povrede));
     }
 
     return members;
@@ -111,10 +111,10 @@ public class SQLAccess implements MemberDAO {
     List<Injury> injuries = new ArrayList<>();
 
     ResultSet resultSet = executeQuery("\n"
-        + "SELECT mjestoPovrede.mjestoPovr, amputacija\n"
+        + "SELECT mjesto_povrede.mjestoPovr, amputacija\n"
         + "FROM povreda\n"
-        + "LEFT JOIN mjestoPovrede ON mjestoPovrede.mjestoPovrID = povreda.mjestoPovrID\n"
-        + "WHERE clanID =" + id);
+        + "LEFT JOIN mjesto_povrede ON mjesto_povrede.mjestoPovrID = povreda.mjestoPovrID\n"
+        + "WHERE id_clan =" + id);
 
     while (resultSet.next()) {
 
@@ -130,8 +130,8 @@ public class SQLAccess implements MemberDAO {
 
   public static void main(String[] args) throws SQLException {
 
-//    SQLAccess access = new SQLAccess("Lado", "lado");
-//    access.getAllMembers().forEach(System.out::println);
+    SQLAccess access = new SQLAccess("Lado", "lado");
+    access.getAllMembers().forEach(System.out::println);
 
   }
 

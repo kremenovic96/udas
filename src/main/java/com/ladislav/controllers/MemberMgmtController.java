@@ -61,6 +61,7 @@ public class MemberMgmtController implements Controller, Initializable {
 
   }
 
+  @FXML
   public void onSearchButtonClicked(ActionEvent actionEvent) {
     ObservableList<Member> memberObservableList = null;
     try {
