@@ -48,9 +48,9 @@ public class SQLAccess implements MemberDAO {
 
   public List<Member> getAllMembers() throws SQLException {
 
-    String query = " SELECT id_clan, ime, prezime, JMBG, datum_rodj, tel1, tel2, mjesto.mjesto,\n"
-        + "        mjesna_zajednica.mjesna_zajednica, ulica, broj_stana_kuce, broj_clanova, datum_smrti,\n"
-        + "        stepen_obrazovanja.stepen_obr, zanimanje.zanimanje, radni_status.radni_status, nacin_povrede.nacin_povrede,\n"
+    String query = " SELECT id_clan, ime, prezime, JMBG, datum_rodjenja, tel1, tel2, mjesto.mjesto,\n"
+        + "        mjesna_zajednica.mjesna_zajednica, ulica, broj_stana_kuce, clanovi_domacinstva, datum_smrti,\n"
+        + "        stepen_obrazovanja.stepen_obrazovanja, zanimanje.zanimanje, radni_status.radni_status, nacin_povrede.nacin_povrede,\n"
         + "        status_invalidnosti.status_invalidnosti, stambeno_pitanje.stambeno_pitanje, pol, napomena\n"
         + "    FROM clan\n"
         + "    LEFT JOIN mjesto ON mjesto.id_mjesto = clan.id_clan\n"
@@ -70,19 +70,19 @@ public class SQLAccess implements MemberDAO {
       String ime = resultSet.getString("ime");
       String prezime = resultSet.getString("prezime");
       String JMBG = resultSet.getString("JMBG");
-      String datum_rodj = resultSet.getString("datum_rodj");
+      String datum_rodjenja = resultSet.getString("datum_rodjenja");
       String tel = resultSet.getString("tel1");
       String tel2 = resultSet.getString("tel2");
       String mjesto = resultSet.getString("mjesto");
       String mjesna_zajednica = resultSet.getString("mjesna_zajednica");
       String ulica = resultSet.getString("ulica");
       String broj_stana_kuce = resultSet.getString("broj_stana_kuce");
-      int clanoviDom = resultSet.getInt("broj_clanova");
+      int clanoviDom = resultSet.getInt("clanovi_domacinstva");
       String datum_smrti = resultSet.getString("datum_smrti");
-      String stepen_obr = resultSet.getString("stepen_obr");
+      String stepen_obrazovanja = resultSet.getString("stepen_obrazovanja");
       String zanimanje = resultSet.getString("zanimanje");
       String radni_status = resultSet.getString("radni_status");
-      String nacin_povr = resultSet.getString("nacin_povr");
+      String nacin_povr = resultSet.getString("nacin_povrede");
       String status_inv = resultSet.getString("status_invalidnosti");
       String stambeno_pitanje = resultSet.getString("stambeno_pitanje");
       String pol = resultSet.getString("pol");
@@ -91,8 +91,8 @@ public class SQLAccess implements MemberDAO {
       List<Injury> povrede = getInjuries(clanID);
 
           members.add(
-              new Member(clanID, ime, prezime, JMBG, datum_rodj, tel, tel2, mjesto, mjesna_zajednica,
-                  ulica, broj_stana_kuce, clanoviDom, datum_smrti, stepen_obr, zanimanje, radni_status,
+              new Member(clanID, ime, prezime, JMBG, datum_rodjenja, tel, tel2, mjesto, mjesna_zajednica,
+                  ulica, broj_stana_kuce, clanoviDom, datum_smrti, stepen_obrazovanja, zanimanje, radni_status,
                   nacin_povr,
                   status_inv, stambeno_pitanje, pol, napomena, povrede));
     }
@@ -111,14 +111,14 @@ public class SQLAccess implements MemberDAO {
     List<Injury> injuries = new ArrayList<>();
 
     ResultSet resultSet = executeQuery("\n"
-        + "SELECT mjesto_povrede.mjestoPovr, amputacija\n"
+        + "SELECT mjesto_povrede.mjesto_povrede, amputacija\n"
         + "FROM povreda\n"
-        + "LEFT JOIN mjesto_povrede ON mjesto_povrede.mjestoPovrID = povreda.mjestoPovrID\n"
+        + "LEFT JOIN mjesto_povrede ON mjesto_povrede.id_mjesto_povrede = povreda.id_mjesto_povrede\n"
         + "WHERE id_clan =" + id);
 
     while (resultSet.next()) {
 
-      String povreda = resultSet.getString("mjestoPovr");
+      String povreda = resultSet.getString("mjesto_povrede");
       boolean amputacija = resultSet.getBoolean("amputacija");
 
       injuries.add(new Injury(povreda, amputacija));
