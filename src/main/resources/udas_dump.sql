@@ -80,6 +80,29 @@ INSERT INTO `clan` VALUES (2,'Mitar','Mitar',NULL,NULL,NULL,NULL,1,NULL,NULL,NUL
 UNLOCK TABLES;
 
 --
+-- Table structure for table `meta`
+--
+
+DROP TABLE IF EXISTS `meta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `meta` (
+  `db_version` int(11) NOT NULL,
+  PRIMARY KEY (`db_version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `meta`
+--
+
+LOCK TABLES `meta` WRITE;
+/*!40000 ALTER TABLE `meta` DISABLE KEYS */;
+INSERT INTO `meta` VALUES (1);
+/*!40000 ALTER TABLE `meta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mjesna_zajednica`
 --
 
@@ -358,4 +381,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-15 17:56:06
+-- Dump completed on 2018-05-15 18:39:47
