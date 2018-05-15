@@ -44,6 +44,7 @@ CREATE TABLE `clan` (
   `napomena` varchar(200) DEFAULT NULL,
   `id_status_invalidnosti` int(11) DEFAULT NULL,
   `id_stambeno_pitanje` int(11) DEFAULT NULL,
+  `id_stepen_invalidnosti` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_clan`),
   KEY `zanimanje_idx` (`id_zanimanje`),
   KEY `stepen_obrazovanja_idx` (`id_stepen_obr`),
@@ -55,8 +56,10 @@ CREATE TABLE `clan` (
   KEY `mjestoo_idx` (`id_mjesto`),
   KEY `id_status_invalidnosti` (`id_status_invalidnosti`),
   KEY `id_stambeno_pitanje` (`id_stambeno_pitanje`),
+  KEY `id_stepen_invalidnosti` (`id_stepen_invalidnosti`),
   CONSTRAINT `clan_ibfk_1` FOREIGN KEY (`id_status_invalidnosti`) REFERENCES `status_invalidnosti` (`id_status_invalidnosti`),
   CONSTRAINT `clan_ibfk_2` FOREIGN KEY (`id_stambeno_pitanje`) REFERENCES `stambeno_pitanje` (`id_stambeno_pitanje`),
+  CONSTRAINT `clan_ibfk_3` FOREIGN KEY (`id_stepen_invalidnosti`) REFERENCES `stepen_invalidnosti` (`id_stepen_invalidnosti`),
   CONSTRAINT `mjesna` FOREIGN KEY (`id_mjesna`) REFERENCES `mjesna_zajednica` (`id_mjesna_zajednica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `mjesto_fk` FOREIGN KEY (`id_mjesto`) REFERENCES `mjesto` (`id_mjesto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `nacin_povrede` FOREIGN KEY (`id_nacin_povrd`) REFERENCES `nacin_povrede` (`id_nacin_povrede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -72,7 +75,7 @@ CREATE TABLE `clan` (
 
 LOCK TABLES `clan` WRITE;
 /*!40000 ALTER TABLE `clan` DISABLE KEYS */;
-INSERT INTO `clan` VALUES (2,'Mitar','Mitar',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,1,1,1,'M',NULL,NULL,NULL),(3,'Rade','Kornjaca',NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,1,1,1,'M',NULL,NULL,NULL);
+INSERT INTO `clan` VALUES (2,'Mitar','Mitar',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,1,1,1,1,'M',NULL,NULL,NULL,NULL),(3,'Rade','Kornjaca',NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,1,1,1,1,'M',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `clan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,6 +278,30 @@ INSERT INTO `status_invalidnosti` VALUES (1,'C?R'),(2,'RVI'),(3,'Nesre?a'),(4,'N
 UNLOCK TABLES;
 
 --
+-- Table structure for table `stepen_invalidnosti`
+--
+
+DROP TABLE IF EXISTS `stepen_invalidnosti`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stepen_invalidnosti` (
+  `id_stepen_invalidnosti` int(11) NOT NULL AUTO_INCREMENT,
+  `kategorija_invalidnosti` int(11) NOT NULL,
+  `procenat_invalidnosti` int(11) NOT NULL,
+  PRIMARY KEY (`id_stepen_invalidnosti`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stepen_invalidnosti`
+--
+
+LOCK TABLES `stepen_invalidnosti` WRITE;
+/*!40000 ALTER TABLE `stepen_invalidnosti` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stepen_invalidnosti` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `stepen_obrazovanja`
 --
 
@@ -331,4 +358,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-14 20:00:24
+-- Dump completed on 2018-05-15 17:56:06
