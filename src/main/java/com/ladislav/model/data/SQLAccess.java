@@ -23,8 +23,16 @@ public class SQLAccess implements MemberDAO {
     connection = ConnectionFactory.getConnection();
   }
 
-  public void createMember(Member member) {
-
+  public void createMember(Member member) throws SQLException {
+    executeQuery("INSERT INTO clan (ime, prezime, jmbg, datum_rodj"
+            +", tel1, tel2, id_mjesto, id_mjesna, ulica, broj_stana_kuce, broj_clanova, datum_smrti"
+            +", id_stepen_obr, id_zanimanje, id_radni_status, id_nacin_povrd)"
+            +"VALUES ("+ member.nameProperty()+", "+member.surnameProperty()+", "
+            +member.identityNumberProperty()+", "+member.birthDateProperty()+", "+member.phoneNumberProperty()
+            +", "+member.phoneNumber2Property()+", "+member.cityProperty()+", "+member.cityProvinceProperty()
+            +", "+member.streetProperty()+", "+member.homeNumberProperty()+", "+member.getPeopleInHousehold()
+            +", "+member.deathDateProperty()+", "+member.educationLevelProperty()+", "+member.proffesionProperty()
+            +", "+member.getWorkStatus()+", "+member.injuryCauseProperty()+");");
   }
 
   public boolean deleteMember(Member member) throws SQLException {
@@ -36,8 +44,8 @@ public class SQLAccess implements MemberDAO {
 
   }
 
-  public Member getMember(Member member) {
-
+  public Member getMember(Member member) throws SQLException{
+    ResultSet resultSet = executeQuery("SELECT * FROM clan WHERE clanID = " + member.getMemberID()+";");
     return null;
   }
 
